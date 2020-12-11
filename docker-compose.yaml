@@ -1,0 +1,52 @@
+version: '2'
+services:
+  spark-master:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/spark-master.Dockerfile
+    container_name: spark-master
+    ports:
+      - "8080:8080"
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+      - PYSPARK_PYTHON=/usr/bin/python3
+      - PYSPARK_DRIVER_PYTHON=/usr/bin/python3
+  
+  spark-worker-1:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/spark-worker.Dockerfile
+    container_name: spark-worker-1
+    ports:
+      - "8081:8081"
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - PYSPARK_PYTHON=/usr/bin/python3
+      - PYSPARK_DRIVER_PYTHON=/usr/bin/python3
+    
+  jupyterlab:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/pyspark-jupyter.Dockerfile
+    container_name: jupyterlab
+    ports:
+      - "8888:8888"
+    command: start.sh jupyter lab --LabApp.token='1234567890'  --LabApp.allow_remote_access='True' --LabApp.allow_origin='*'
+    restart: always
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+  
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/data
+    command: server /data
+    environment:
+      - MINIO_ACCESS_KEY=ACCESSKEY
+      - MINIO_SECRET_KEY=VERYSECRETACCESSKEY
+
+volumes:
+  minio-data:
