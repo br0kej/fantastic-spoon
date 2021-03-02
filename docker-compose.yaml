@@ -11,7 +11,13 @@ services:
       - INIT_DAEMON_STEP=setup_spark
       - PYSPARK_PYTHON=/usr/bin/python3
       - PYSPARK_DRIVER_PYTHON=/usr/bin/python3
-  
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
   spark-worker-1:
     build:
       context: .
@@ -19,6 +25,18 @@ services:
     container_name: spark-worker-1
     ports:
       - "8081:8081"
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - PYSPARK_PYTHON=/usr/bin/python3
+      - PYSPARK_DRIVER_PYTHON=/usr/bin/python3
+  
+  spark-worker-2:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/spark-worker.Dockerfile
+    container_name: spark-worker-2
+    ports:
+      - "8082:8082"
     environment:
       - SPARK_MASTER=spark://spark-master:7077
       - PYSPARK_PYTHON=/usr/bin/python3
