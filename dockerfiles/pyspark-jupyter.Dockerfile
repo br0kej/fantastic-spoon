@@ -14,7 +14,8 @@ USER $NB_UID
 RUN conda create -n py37 python=3.7 -y && \
     source activate py37 && \
     conda install ipykernel minio &&\
-    python -m ipykernel install --user --name py37 --display-name "Python (py37)"
+    python -m ipykernel install --user --name py37 --display-name "Python (py37)" &&\
+    pip install dask distributed
 
 COPY --chown=jovyan:users ./notebooks $HOME_DIR/notebooks/
 COPY --chown=jovyan:users ./sample-data $HOME/sample-data/
