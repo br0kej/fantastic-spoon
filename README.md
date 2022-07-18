@@ -1,11 +1,13 @@
-# Data Science Docker Lab
+# PySpark and Dask Lab :test_tube:
+## What is this?
+This repository provides a simple means of bringing up a small Spark cluster (1 x Spark Master, 1 x Spark Worker), a small Dask Cluster (1 x Dask Scheduler, 1 x Dask Worker), a minio object storage API (an S3 compliant storage solution) and a Jupyter Lab instance (with `Python3.7` & `Python3.8` environments). The primary driver behind the creation of this lab is to provide a means of learning development approaches using things like Apache Spark, Dask and an S3-esque object stores but not just doing it locally. 
 
-Welcome to the Data Science Docker Lab repo. This repository provides a simple means of setting up a small Spark cluster (1 x Spark Master, 1 x Spark Worker), a minio storage api (an S3 compliant storage solution) and a Jupyter Lab instance (with `Python3.7` & `Python3.8` environments). The primary driver behind the creation of this lab is to provide a means of test, development and learning of development approaches using a Apache Spark and an S3-esque file store. 
+<img src="pyspark_and_dask_lab_overview.png" width="300">
+
 ## Getting Started
 ### Pre-requisites 
 
-- A correctly proxied internet connection (if on Don-B) or an internet connected standalone
-- `docker` - For re-building the containers
+- `docker` - For building the containers
 - `docker-compose` - For standing up the containers
 
 ### Diving Straight In
@@ -14,7 +16,7 @@ git clone <bitbucket-repo>
 cd data-science-docker-lab
 docker-compose up
 ```
-This may take some time to complete as the docker containers are pulled, rebuilt and then stood up. Once it does complete, you should be able to access the all of the services on the ports below.
+This may take some time to complete as the docker containers are pulled, rebuilt and then stood up. Once it does complete, you should be able to access the all the services on the ports below.
 
 | Service         | URL             | Credentials Required | Credential Defaults |
 | -----------     | -----------     | -----------          | -----------         |
@@ -22,6 +24,7 @@ This may take some time to complete as the docker containers are pulled, rebuilt
 | Minio           | `localhost:9000`| Yes                  | Access Key: `ACCESSKEY` Secret Key: `VERYSECRETACCESSKEY` |
 | Spark Master    | `localhost:8080`| No                   | N/A |
 | Spark Worker    | `localhost:8081`| No                   | N/A |
+| Dask Scheduler - UI  |`localhost:8786`| No | N/A  |
 
 All of the credential defaults can be amended within the `docker-compose.yaml` if required.
 ## Example Notebooks
@@ -31,12 +34,10 @@ The jupyterlab instance has several notebooks included to support easy spin up a
 1) `MinioPushAndPull` - This notebook goes through an end to end example of using the Minio API to push an example file and then retrieve it again.
 2) `PySparkConnectionTest` - This notebook provides a method to check the connection between the JupyterLab instance and the Spark Master through creating a `SparkContext`
 3) `PySparkDataConnection` - This notebook goes through an example of using Spark to collect a file from Minio.
-
-## Authors
-TODO
+4) `DaskDistrbutedExecutionExample` - This notebook shows how to create a Dask Client, connect it to a Dask scheduler and then execute series of python functions and return the results.
 
 ## License
-TODO
+MIT
 ## FAQ
 ### 1) Getting Data In
 
