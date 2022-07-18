@@ -1,4 +1,4 @@
-# PySpark and Dask Lab :test_tube:
+# Fantastic Spoon - PySpark and Dask Learning Lab :test_tube:
 ## What is this?
 This repository provides a simple means of bringing up a small Spark cluster (1 x Spark Master, 1 x Spark Worker), a small Dask Cluster (1 x Dask Scheduler, 1 x Dask Worker), a minio object storage API (an S3 compliant storage solution) and a Jupyter Lab instance (with `Python3.7` & `Python3.8` environments). The primary driver behind the creation of this lab is to provide a means of learning development approaches using things like Apache Spark, Dask and an S3-esque object stores but not just doing it locally. 
 
